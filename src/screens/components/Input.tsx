@@ -1,6 +1,6 @@
 import { Input as NativeBaseInput } from 'native-base';
 
-export function Input() {
+export function Input({ ...rest }) {
     return (
         <NativeBaseInput
             bg="gray.700"
@@ -11,6 +11,7 @@ export function Input() {
             fontFamily="body"
             color='white'
             placeholderTextColor="gray.300"
+            {...rest}
         />
     );
 }

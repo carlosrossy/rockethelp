@@ -13,8 +13,8 @@ export function SingIn() {
                 Acesse sua conta
             </Heading>
 
-            <Input />
-            <Input />
+            <Input placeholder="E-mail" />
+            <Input placeholder="Senha" />
 
         </VStack>
     )
