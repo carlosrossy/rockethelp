@@ -7,7 +7,7 @@ import {
 
 import { THEME } from './src/styles/theme';
 
-import { SingIn } from "./src/screens/SingIn";
+import { Home } from "./src/screens/Home";
 import { Loading } from './src/components/Loading';
 
 export default function App() {
@@ -24,7 +24,7 @@ export default function App() {
         translucent
 
       />
-      {fontsLoaded ? <SingIn /> : <Loading />}
+      {fontsLoaded ? <Home /> : <Loading />}
     </NativeBaseProvider>
   );
 }
