@@ -8,7 +8,7 @@ import {
 import { THEME } from './src/styles/theme';
 
 import { SingIn } from "./src/screens/SingIn";
-import { Loading } from './src/screens/components/Loading';
+import { Loading } from './src/components/Loading';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
