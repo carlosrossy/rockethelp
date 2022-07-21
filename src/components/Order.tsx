@@ -5,7 +5,7 @@ export type OrderProps = {
     id: string;
     patrimony: string;
     when: string;
-    status: "open" | "closed ";
+    status: "open" | "closed";
 }
 
 type Props = IPressableProps & {
@@ -42,7 +42,7 @@ export function Order({ data, ...rest }: Props) {
 
                 <Circle bg="gray.500" h={12} w={12} mr={5}>
                     {
-                        data.status === 'closed '
+                        data.status === 'closed'
                             ? <CircleWavyCheck size={24} color={statusColor} />
                             : <Hourglass size={24} color={statusColor} />
                     }
