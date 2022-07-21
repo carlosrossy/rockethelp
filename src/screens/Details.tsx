@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { VStack, Text, useTheme, HStack, ScrollView } from 'native-base';
+import { Alert } from 'react-native';
+import { VStack, Text, useTheme, HStack, ScrollView, Box } from 'native-base';
 import fireStore from '@react-native-firebase/firestore'
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
 import { CircleWavyCheck, Hourglass, DesktopTower, Clipboard } from 'phosphor-react-native'
 
@@ -29,9 +30,33 @@ export function Details() {
     const [isLoading, setIsLoading] = useState(true);
     const [order, setOrder] = useState<OrderDetails>({} as OrderDetails);
 
+    const navigator = useNavigation();
     const { colors } = useTheme();
     const route = useRoute();
     const { orderId } = route.params as RoutesParams
+
+    function handleOrderClose() {
+        if (!solution) {
+            Alert.alert("Solicitação", "Informa a solução para encerrar a solicitação");
+        }
+
+        fireStore()
+            .collection<OrderFirestoreDTO>('orders')
+            .doc(orderId)
+            .update({
+                status: 'closed',
+                solution,
+                closed_at: fireStore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+                Alert.alert("Solicitação", "Solicitação encerrada.");
+                navigator.goBack();
+            })
+            .catch(error => {
+                console.error(error);
+                Alert.alert("Solicitação", "Não foi possivel encerrar a solicitação");
+            });
+    }
 
     useEffect(() => {
         fireStore()
@@ -63,7 +88,10 @@ export function Details() {
 
     return (
         <VStack flex={1} bg="gray.700">
-            <Header title='Solicitação' />
+            <Box px={6} bg="gray.600">
+                <Header title='Solicitação' />
+            </Box>
+
 
             <HStack bg="gray.500" justifyContent="center" p={4} >
                 {
@@ -98,15 +126,20 @@ export function Details() {
                     <CardDetails
                         title='solução'
                         icon={CircleWavyCheck}
+                        description={order.solution}
                         footer={order.closed && `Encerrado em ${order.closed}`}
                     >
-                        <Input
-                            placeholder='Descrição do Problema'
-                            onChangeText={setSolution}
-                            textAlignVertical="top"
-                            multiline
-                            h={24}
-                        />
+                        {
+                            order.status === 'open' &&
+                            <Input
+                                placeholder='Descrição do Problema'
+                                onChangeText={setSolution}
+                                textAlignVertical="top"
+                                multiline
+                                h={24}
+                            />
+                        }
+
                     </CardDetails>
                 </ScrollView>
 
@@ -115,6 +148,7 @@ export function Details() {
                     <Button
                         title='Encerrar Solicitação'
                         m={5}
+                        onPress={handleOrderClose}
                     />
                 }
             </HStack>
