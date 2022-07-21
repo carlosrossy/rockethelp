@@ -4,7 +4,7 @@ import { VStack, Text, useTheme, HStack, ScrollView, Box } from 'native-base';
 import fireStore from '@react-native-firebase/firestore'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
-import { CircleWavyCheck, Hourglass, DesktopTower, Clipboard } from 'phosphor-react-native'
+import { CircleWavyCheck, Hourglass, DesktopTower, ClipboardText } from 'phosphor-react-native'
 
 import { dateFormat } from '../utils/firestoreDateFormats';
 
@@ -110,18 +110,21 @@ export function Details() {
                 </Text>
 
                 <ScrollView mx={5} showsVerticalScrollIndicator={false}>
-                    <CardDetails
-                        title='equipamento'
-                        description={order.description}
-                        icon={Clipboard}
-                    />
 
                     <CardDetails
-                        title='descrição do problema'
+                        title='equipamento'
                         description={`Patrimônio ${order.patrimony}`}
                         icon={DesktopTower}
-                        footer={order.when}
+
                     />
+                    <CardDetails
+                        title='descrição do problema'
+                        description={order.description}
+                        icon={ClipboardText}
+                        footer={`Registrado em ${order.when}`}
+                    />
+
+
 
                     <CardDetails
                         title='solução'
