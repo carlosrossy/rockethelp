@@ -45,10 +45,10 @@ Para a autenticação foi ultilizado o Firebase Authentication que pode ser enco
 ## 🎲 Executar aplicação
 ```bash
 # Clone este repositório
-$ git clone https://github.com/carlosrossy/ClickPost.git
+$ git clone https://github.com/carlosrossy/rockethelp.git
 
 # Entre na pasta do projeto.
-$ cd ClickPost
+$ cd rockethelp
 
 # Instale as dependências
 $ yarn
